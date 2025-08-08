@@ -31,15 +31,14 @@
   </form>
 
   <script>
-  async function fetchNonce() {
-    try {
-      const res = await fetch('https://arrostiland.it/', { credentials: 'include' });
-      const text = await res.text();
-      const match = text.match(/name=\"poll_4_nonce\" value=\"([a-f0-9]+)\"/i);
-      if(match && match[1]) return match[1];
-    } catch(e) {}
-    return null;
-  }
+ async function fetchNonce() {
+  try {
+    const res = await fetch('https://vota-castelvecchio-subequo.vercel.app/', {credentials: 'omit'});
+    const data = await res.json();
+    if(data.nonce) return data.nonce;
+  } catch(e) {}
+  return null;
+}
 
   document.getElementById('voteBtn').onclick = async function() {
     var btn = this;
