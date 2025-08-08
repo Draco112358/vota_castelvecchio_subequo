@@ -1,0 +1,61 @@
+<!-- Pagina intermedia per semplificare il voto su arrostiland.it per Castelvecchio Subequo -->
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Vota Castelvecchio Subequo - Arrostiland</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 30px; text-align: center; }
+    .box { background: #fff; border-radius: 10px; max-width: 400px; margin: auto; padding: 30px; box-shadow: 0 3px 15px rgba(0,0,0,.08); }
+    button { background: #3d5a80; color: #fff; border: none; padding: 13px 38px; border-radius: 5px; font-size: 1.2em; margin-top: 28px; cursor: pointer; }
+    button:disabled { background: #aaa; }
+    .info { font-size: 1em; margin: 12px 0 16px 0; }
+    .error { color: #c00; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Aiuta Castelvecchio Subequo!</h2>
+    <div class="info">Clicca il pulsante qui sotto per votare <strong>Castelvecchio Subequo</strong> al sondaggio di Arrostiland.<br><br>Verrai indirizzato al sito ufficiale per confermare il voto.</div>
+    <button id="voteBtn">Vota per Castelvecchio Subequo</button>
+    <div id="errMsg" class="error"></div>
+  </div>
+
+  <form id="voteForm" action="https://arrostiland.it/" method="POST" target="_blank" style="display:none;">
+    <input type="hidden" name="action" value="polls">
+    <input type="hidden" name="view" value="process">
+    <input type="hidden" name="poll_id" value="4">
+    <input type="hidden" name="poll_4" value="41">
+    <input type="hidden" name="poll_4_nonce" id="nonceInput" value="">
+  </form>
+
+  <script>
+  async function fetchNonce() {
+    try {
+      const res = await fetch('https://arrostiland.it/', { credentials: 'include' });
+      const text = await res.text();
+      const match = text.match(/name=\"poll_4_nonce\" value=\"([a-f0-9]+)\"/i);
+      if(match && match[1]) return match[1];
+    } catch(e) {}
+    return null;
+  }
+
+  document.getElementById('voteBtn').onclick = async function() {
+    var btn = this;
+    btn.disabled = true;
+    document.getElementById('errMsg').textContent = '';
+    var nonce = await fetchNonce();
+    if(!nonce) {
+      document.getElementById('errMsg').textContent = 'Impossibile ottenere il token di sicurezza. Apri il sondaggio e vota manualmente.';
+      btn.disabled = false;
+      window.open('https://arrostiland.it/', '_blank');
+      return;
+    }
+    document.getElementById('nonceInput').value = nonce;
+    document.getElementById('voteForm').submit();
+    btn.disabled = false;
+  };
+  </script>
+</body>
+</html>
