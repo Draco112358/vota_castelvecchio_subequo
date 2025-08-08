@@ -40,20 +40,20 @@
 }
 
   document.getElementById('voteBtn').onclick = async function() {
-    var btn = this;
-    btn.disabled = true;
-    document.getElementById('errMsg').textContent = '';
-    var nonce = await fetchNonce();
-    if(!nonce) {
-      document.getElementById('errMsg').textContent = 'Impossibile ottenere il token di sicurezza. Apri il sondaggio e vota manualmente.';
-      btn.disabled = false;
-      window.open('https://arrostiland.it/', '_blank');
-      return;
-    }
-    document.getElementById('nonceInput').value = nonce;
-    document.getElementById('voteForm').submit();
+  var btn = this;
+  btn.disabled = true;
+  document.getElementById('errMsg').textContent = '';
+  var nonce = await fetchNonce();
+  if(!nonce) {
+    document.getElementById('errMsg').textContent = 'Impossibile ottenere il token di sicurezza. Apri il sondaggio e vota manualmente.';
     btn.disabled = false;
-  };
+    window.open('https://arrostiland.it/', '_blank');
+    return;
+  }
+  document.getElementById('nonceInput').value = nonce;
+  document.getElementById('voteForm').submit();
+  btn.disabled = false;
+};
   </script>
 </body>
 </html>
