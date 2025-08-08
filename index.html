@@ -33,7 +33,7 @@
   <script>
  async function fetchNonce() {
   try {
-    const res = await fetch('https://vota-castelvecchio-subequo.vercel.app/', {credentials: 'omit'});
+    const res = await fetch('https://api-vota-castelvecchio.vercel.app/api/nonce', {credentials: 'omit'});
     const data = await res.json();
     if(data.nonce) return data.nonce;
   } catch(e) {}
