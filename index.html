@@ -23,17 +23,16 @@
   </div>
 
   <form id="voteForm" action="https://arrostiland.it/" method="POST" target="_blank" style="display:none;">
-    <input type="hidden" name="action" value="polls">
-    <input type="hidden" name="view" value="process">
-    <input type="hidden" name="poll_id" value="4">
-    <input type="hidden" name="poll_4" value="41">
-    <input type="hidden" name="poll_4_nonce" id="nonceInput" value="">
-  </form>
-
+  <input type="hidden" name="action" value="polls">
+  <input type="hidden" name="view" value="process">
+  <input type="hidden" name="poll_id" value="4">
+  <input type="hidden" name="poll_4" value="41">
+  <input type="hidden" name="poll_4_nonce" id="nonceInput" value="">
+</form>
   <script>
  async function fetchNonce() {
   try {
-    const res = await fetch('https://api-vota-castelvecchio.vercel.app/api/nonce', {credentials: 'omit'});
+    const res = await fetch('https://TUA-VERCEL-APP.vercel.app/api/nonce', { credentials: 'omit' });
     const data = await res.json();
     if(data.nonce) return data.nonce;
   } catch(e) {}
